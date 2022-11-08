@@ -1,558 +1,659 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0">
     <title>little sketches: the MAC curve</title>
     <meta name="description" content="">
-	<script
-  		src="https://code.jquery.com/jquery-3.6.0.min.js"
-  		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenMax.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenMax.min.js"></script>
 
-  	<style>
-	@font-face {
-		font-family: humour;
-		src: url(fonts/Humor-Sans.ttf);	}an argument with a MAC curve"   	
-	body {
-    	background-color: hsl(0, 0%, 100%);
-		color: #000;
-	} 
-	#animation{
-		text-align: center;
-		margin-left: auto; 
-		margin-right: auto;
-		margin-bottom: -200px;
-	}
-#sketchyMACC{
-		max-width: 100vw;
-		max-height: 100vh;
-}
+    <style>
+        @font-face {
+            font-family: humour;
+            src: url(fonts/Humor-Sans.ttf);
+        }
+         body { 
+            background-color: hsl(0, 0%, 100%);
+            color: #000;
+        }
 
-	#play01{
-		font-family: humour;
-		position: absolute;
-		top: 30vh;
-		left: 50vw;
-		width: 120px;
-		height: 120px;
-		text-align: center;
-		vertical-align: middle;
-		cursor: pointer;
-	}
-	.play{
-	 	font-family: humour;
-		position: absolute;
-		top: 85vh;
-		left: 85vw;
-		width: 80px;
-		height: 80px;
-		text-align: center;
-		vertical-align: middle;
-		cursor: pointer;
-	} 	  
-</style>
-	
+        #animation {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: -200px;
+        }
+
+        #sketchyMACC {
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+
+        #play01 {
+            font-family: humour;
+            position: absolute;
+            top: 30vh;
+            left: 50vw;
+            width: 120px;
+            height: 120px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .play {
+            font-family: humour;
+            position: absolute;
+            top: 85vh;
+            left: 85vw;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
-	
+
 <body>
-	
-<div id="animation">
-	<svg id="sketchyMACC"  width="100%" viewBox="0 0 1050 760">
-<g id="sketch" transform="translate(0,-310)">
-//text elements
-  <g id="narrativeText" font-family="humour" fill="#000000">
-//TEXT PHASE01 > Show header	  
-   <text id="headerLabel" class="narrative01" style="text-anchor:middle;text-align:center;" font-size="20px" line-height="125%" font-size="20px" y="338.47192" x="523.26294" >
-	   <tspan y="338.47192" x="523.26294">reAdINg ThE MaRgINaL ABatemEnT CoSt curVe: a LitTlE sKetCH</tspan></text>
-//TEXT PHASE02 > show axist labels 
-   <text id="yAxisLabel" class="narrative02" transform="matrix(-0.00644261,-0.99997925,0.99997925,-0.00644261,0,0)" line-height="125%" font-size="16px" y="61.188354" x="-750.21002">		   <tspan y="61.188354" x="-750.21002">COST pEr UNit of Abatement</tspan></text>
-   <text id="xAxisLabel" class="narrative02" style="text-anchor:middle;text-align:center;" line-height="100%" font-size="16px" y="616.0553" x="890.31244">
-	   <tspan y="616.0553" x="894.17181">EMissions</tspan>
-	   <tspan y="632.0553" x="890.31244">ABATEMENT</tspan> </text>
-//TEXT PHASE03 > show axist labels and block/option description	     
-  <text id="blockLabel" class="narrative03" style="text-anchor:middle;text-align:center;"  font-size="16px" y="382.41937" x="399.75165" line-height="125%">
-	  <tspan y="382.41937" x="359.75165">each BLOcK rePREseNTS an Option FOR REDUCING EMISSIONS</tspan></text>
-//TEXT PHASE04 > show detail of how to read blocks		  
-   <text id="blockHeightText" class="narrative04" style="text-anchor:middle;text-align:center;"  transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="474.97787" x="861.0661" line-height="125%">
-	   <tspan y="474.97787" x="863.47821">The height AND Position OF  </tspan>
-	   <tspan y="487.47787" x="863.47821">eACH block EiTher Below or </tspan>
-	   <tspan y="499.97787" x="863.47821">ABOVe tHe X-Axis, SHows the </tspan>
-	   <tspan y="512.47791" x="863.47821"> &quot;COST Per unit of abatement&quot; </tspan></text>
-   <text id="blockWidthText"  class="narrative04" style="text-anchor:middle;text-align:center;"  transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="436.6109" x="606.59552" line-height="125%">
-	   <tspan y="436.6109" x="609.00763">The WIDTH OF A block SHows the Emissions</tspan>
-	   <tspan y="449.1109" x="606.59552">abatement potential of the option</tspan></text>
-//TEXTPHASE05 > show detail of how to read blocks	
-   <text id="abatementText" class="narrative05" style="text-anchor:middle;text-align:center;" font-size="10px" y="676.29614" x="924.35229" line-height="125%"><tspan style="text-anchor:middle;text-align:center;" font-size="16px" y="676.29614" x="924.35229"/>
-	   <tspan y="691.29614" x="926.7644">EACH Option ADdS To tHE  </tspan>
-	   <tspan y="703.79614" x="926.7644">total aBatEment, wHICH IS  </tspan>
-	   <tspan y="716.29614" x="926.7644">USUALLY SHown on a COnSISTENT  </tspan>
-	   <tspan y="728.79614" x="926.7644">TIME BASIS LIKe EMISsONS PER </tspan>
-	   <tspan y="741.29614" x="926.7644">YEAR - bEcAuSE PRoJECtS  </tspan>
-	   <tspan y="753.79614" x="926.7644">GENERAlLY reDuCE eMISSIONS </tspan> 
-	   <tspan y="766.29614" x="926.7644">OVER DIFFERENT TIMEFRAMES..</tspan></text>	 
-//TEXT PHASE06 > show beneficial / costly option labels
-   <text id="benefitOptionLabel" class="narrative06" style="text-anchor:middle;text-align:center;"  font-size="16px" y="567.19147" x="288.03159" line-height="125%">
-	   <tspan y="567.19147" x="288.03159">BENFeICIAl Options</tspan></text>
-   <text id="costlyOptionLabel" class="narrative06" style="text-anchor:middle;text-align:center;"  font-size="16px" y="683.52704" x="669.35693" line-height="125%">
-	   <tspan y="683.52704" x="669.35693">COSTLY Options</tspan></text>
-//TEXT PHASE07 > show beneficial / costly option descriptions
-   <text id="benefitOptionText" class="narrative07" style="text-anchor:middle;text-align:center;"  transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="488.87845" x="264.23639" line-height="125%">
-	   <tspan y="488.87845" x="266.6485">ALL of these OPtIONS ARE PredICteD TO Be Financial BenefiTs.</tspan>
-	   <tspan y="501.37845" x="266.6485">THey Save you money once you take into account all their </tspan>
-	   <tspan y="513.87842" x="266.6485">costs and benefits over its lifetime. Visually THey have a </tspan>
-	   <tspan y="526.37848" x="264.23639">&quot;NEgative&quot; COst Per UnIt and are positioned &apos;Below&apos; the x-axis</tspan></text>	  
-   <text id="costlyOptionText" class="narrative07" style="text-anchor:middle;text-align:center;"  transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="793.00116" x="563.80829" line-height="125%">
-	   <tspan y="793.00116" x="563.80829">these OPtIONS hAVE a NET Cost To AbatE emiSsIONs.</tspan>
-	   <tspan y="805.50116" x="566.2204">ALL things COnsidered - Financially at least - It&apos;s </tspan>
-	   <tspan y="818.00116" x="566.2204">EXPECted ThaT Their costs Will Outweight THeir benefits </tspan>
-	   <tspan y="830.50116" x="566.2204">over THe life OF thE opTiOn. Visually THey have a &quot;Positive&quot;</tspan>
-	   <tspan y="843.00116" x="563.80829">COst Per Unit and are positioned &apos;ABOVE&apos; the x-axis</tspan></text>
-//TEXT PHASE08 > four part reveal of prioritisation labels and text
-   <text id="prioritisationLabel" class="narrative08" style="text-anchor:middle;text-align:center;" line-height="125%" font-size="16px" y="877.40735" x="482.5318" >
-	   <tspan y="877.40735" x="482.5318"> PRIORITISATION OPTIONs.....By COST</tspan></text>
-   <text id="lowestCostLabel" class="narrative08" style="text-anchor:middle;text-align:center;"  transform="matrix(1.0689809,-0.01662634,0.01900526,0.93517481,0,0)" font-size="11px" y="932.89001" x="93.598572" line-height="125%">
-	   <tspan y="932.89001" x="96.251892">Lowest </tspan>
-	   <tspan y="946.64001" x="93.598572">cost</tspan></text>
-   <text id="highestCostLabel"  class="narrative08"style="text-anchor:middle;text-align:center;"  transform="matrix(0.99974066,0.02277322,-0.02277322,0.99974066,0,0)" font-size="10px" y="853.77307" x="894.98285" line-height="125%">
-	   <tspan y="853.77307" x="897.39496">HIGHEST </tspan>
-	   <tspan y="866.27307" x="894.98285">COst</tspan></text>
-   <text id="prioritisationText" class="narrative08" style="text-anchor:middle;text-align:center;"  transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="972.16168" x="455.01791" line-height="125%">
-	   <tspan y="972.16168" x="457.43002">THe chaRT puTS Options IN orDEr (left to Right) oF &quot;COst Per UNit&quot;. So the cheApeSt options are oN the left, and as yOu move rIGht and "add" more </tspan>
-	   <tspan y="984.66168" x="457.43002">abATement, you ALWays COme Across the Option with the NeXT lowest Cost - this IS tHe &quot;MARginal Cost&quot; And puTs The &quot;M&quot; in Macc. So In THeory Its CHeApest  </tspan>
-	   <tspan y="997.16168" x="457.43002">TO Start with Those options On the LEFt BEFore MOving RIght. ANything BelOW the Line (i.e. The X-AXIS) is FINAnciALLY BenEFIcIal - FOr EConomic-y and FinANCe</tspan>
-	   <tspan y="1009.6617" x="457.43002">Types, it hAS A Positive rate of REturn ANd A Positive Net Present Value., GEnerally these Look like Pretty Good investments. THe Rest of the OPtions</tspan>
-	   <tspan y="1022.1617" x="457.43002">have a &quot;Cost&quot;, ANd ITs a COst you might BE williING to PAY, EsPeciAlly If you think Reducing EMissions and Saving the PLanet is Worth SOMething!!!! </tspan></text>
- 
-//narrative text PHASE09 > four part reveal of questions
- <text id="question01" class="narrative09" style="text-anchor:middle;text-align:center;" line-height="100%" font-size="16px" y="998.55603" x="230.74493">
-	   <tspan y="998.55603" x="234.60431" font-weight="normal"> SO IS THIS WHY  </tspan>
-	   <tspan y="1014.556" x="230.74493" font-weight="normal">We&apos;RE DOing This...</tspan></text>
-   <text id="question02" class="narrative09" style="text-anchor:middle;text-align:center;" line-height="100%" font-size="16px" y="1001.6514" x="445.88303">
-	   <tspan y="1001.6514" x="449.7424"> TO MAke BETtEr </tspan>
-	   <tspan y="1017.6514" x="445.88303">DecISIONS? RIGHT?</tspan></text>
-   <text id="question03" class="narrative09" style="text-anchor:middle;text-align:center;" line-height="100%" font-size="16px" y="1000.9681" x="648.45947" >
-	   <tspan y="1000.9681" x="652.31885">AND is thAT WhAT </tspan><tspan id="tspan3734" style="text-anchor:middle;text-align:center;" y="1016.9681" x="652.31885">I&apos;M SEEING HERE? </tspan></text>
-   <text id="question04" class="narrative09" style="text-anchor:middle;text-align:center;" line-height="100%" font-size="16px" y="995.21381" x="857.77466" >
-	   <tspan y="995.21381" x="861.63403">but WHAT AM I </tspan><tspan id="tspan4671" style="text-anchor:middle;text-align:center;" y="1011.2138" x="861.63403">NOT SEEING!?? </tspan></text>
-  </g>
-//line drawing SVG elements	
-  <g id="frame" stroke-dasharray="none" fill="none">
-      <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-	  <path id="headerBorder" d="m877.8388,322.21068c-279.80842,3.15617-539.18552-4.99776-706.15612-3.47464,2.63146,17.56893,0.0778,16.6807-0.86956,27.89667,582.75852,0.9891,504.28848,2.35368,708.24602,2.6087l-0.86957-27.9003"/>
-	  <path id="border" d="m172,23.094482-149,1c-2.209521,90.648788-3.763203,181.31357-4.660882,271.98484-1.419067,143.33466-1.198753,286.68554,0.660882,430.01516h1010l-0.8892-357.00047-2.1108-346.99953-144-1.999998" transform="translate(0,308.2677)"/>
-  </g>
-  <g id="axis" stroke-dasharray="none" fill="none">
-     <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-	  <g id="yAxis">
-	   <path d="m60.789332,509.91014c3.29177-17.48765-0.780051-35.40227-0.850001-57.02124"/>
-	   <path d="m49.252917,451.71037c7.357066,1.26706,14.714131,0.85402,22.071197,0.005-3.750182-5.27778-7.500365-7.73051-11.250547-9.29918-4.00133,2.17956-6.632764,5.72901-9.641849,8.90081"/>
-	   <path d="m62.123036,797.71404,0-43.36632"/>
-	   <path d="m72.113043,796.18827-21.73913,2.6087c4.056443,3.47826,5.259673,6.95652,13.104348,10.43478z"/></g>
-	  <g id="xAxisGroup">
-	   <path d="m76.759962,620.69024c277.01619,5.30155,452.27532,0.22429,766.4635,0.27453"/>
-	   <path d="m935.67596,620.6195c11.86523,1.96239 19.37196,0.083 32.82929,0.10162"/>
-	   <path d="m979.20994,620.53651c-8.1986-3.76408-6.82698-4.55794-10.2591-5.95553-0.72906,4.17395-1.03485,7.19446,0,13.89624,1.7382-0.72519,6.195-5.35735,10.2591-7.94071z"/></g>
-  </g>
-  <g id="blocks" stroke-dasharray="none" fill="none">
-   <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-   <path id="block01" d="m89.302763,623.36517c3.97048,60.26265,5.927724,121.67579,2.892224,171.46732h71.012823l-1.82084-169.95548z"/>
-   <path id="block02" d="m168.66706,627.11005-0.37758,90.11987h36.52547l0.37758-92.46433z"/>
-   <path id="block03" d="m211.27419,625.57736,2.62826,78.56434c46.3344-3.37046,65.99802-2.93081,80.89031-1.80954,7.48257,0.56338,13.7606,1.29884,21.6119,1.80954l-2.62826-80.57882z"/>
-   <path id="block04" d="m319.94594,624.62736,0.18432,57.15841,7.18857,0c2.59949-14.21948,0.42566-37.98559-0.18432-58.62401z"/>
-   <path id="block05" d="m333.20615,625.46853,1.95245,34.0759c13.40985-2.99301,50.25684-0.12674,76.14571,0l-1.95245-34.94963c-8.35211,2.91902-33.22996-2.0108-76.14571,0.87373z"/>
-   <path id="block06" d="m413.98485,625.36858,2.84295,8.37285,106.93267-1.31413,1.09944-7.27341z"/>
-   <path id="block07" d="m525.06397,584.62954c0.36665,10.73326-5.22293,15.51028,1.49278,32.5926h58.21814l-1.49277-33.42831z"/>
-   <path id="block08" d="m588.68573,559.54908,0.18432,57.15841,7.18857,0c2.28441-24.23304,0.92568-41.1798-0.18432-58.62401z"/>
-   <path id="block09" d="m602.88523,552.90907,0.50443,65.55873,19.67296,0-0.50444-67.23973z"/>
-   <path id="block10" d="m625.22545,515.68894,2.62826,102.50221,102.50221,0-2.62826-105.13048c-35.01082-5.00256-76.32398-7.10195-102.50221,2.62827z"/>
-   <path id="block11" d="m733.90753,489.70847,0.93655,130.06319c12.17516-0.95708,24.35031-2.40834,36.52547,0l-0.93655-133.39814z"/>
-   <path id="block12" d="m775.94035,452.02703,0.67181,164.39226,26.20068,0c0.11777-56.37334,5.42578-115.34179-0.67181-168.60745-25.36538,1.40506-19.68495,2.81013-26.20068,4.21519z"/>
-  </g>
-  <g id="blockFills" stroke-dasharray="none" fill="none">
-   <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-   <g id="block01fill">
-    <path d="m93.661972,783.85514,15.492958,9.15493"/>
-    <path d="m95.774648,772.58753,28.873242,20.42254"/>
-    <path d="m95.774648,757.09458c13.615022,7.33392,27.230052,21.09061,40.845072,33.80281"/>
-    <path d="m95.774648,741.60162c36.431282,29.24166,42.058152,36.48017,53.521122,47.88732"/>
-    <path d="m94.366197,722.58753c25.909243,26.35891,45.712193,42.54067,66.197183,59.85916"/>
-    <path d="m94.366197,712.72838c28.278763,24.84039,48.224753,40.1576,63.380283,50"/>
-    <path d="m95.070423,702.165,59.859157,45.07042"/>
-    <path d="m93.661972,687.37627,66.901408,50.70422"/>
-    <path d="m93.661972,675.40444,62.676058,47.18309"/>
-    <path d="m97.887324,664.84106c21.143316,15.98452,41.465846,30.87465,57.042256,39.43662"/>
-    <path d="m94.366197,650.75655c19.768723,8.41762,41.846273,26.07054,63.380283,41.54929"/>
-    <path d="m92.253521,637.37627,64.084509,40.14084"/>
-    <path d="m99.295775,628.92556c20.961615,14.77576,39.109365,25.33072,56.338025,34.50704"/>
-    <path d="m120.42254,629.62979c13.70048,4.84412,25.26501,11.82418,35.21126,20.42253"/>
-    <path d="m135.21127,627.51711,20.42253,13.38028"/>
-    <path d="m147.88732,627.51711,9.15493,7.04226,0,0,0,0,0,0,0.70423,0"/>
-   </g>
-   <g id="block02fill">
-    <path d="m168.74341,708.23236,10.71753,6.13505-0.59541-1.02251"/>
-    <path d="m170.42254,698.64387,21.83098,17.60564"/>
-    <path d="m171.12676,688.08049,32.39437,26.76057"/>
-    <path d="m168.30986,674.70021,32.39437,26.05634"/>
-    <path d="m171.83099,663.4326,28.87324,23.2394"/>
-    <path d="m169.71831,653.57345,31.69014,20.42254"/>
-    <path d="m172.53521,642.30584,26.76056,17.60564"/>
-    <path d="m173.23944,632.44669,28.87324,20.42253"/>
-    <path d="m182.39437,628.22134,18.30986,13.38028"/>
-    <path d="m194.3662,626.81289,7.04225,4.92957"/>
-   </g>
-   <g id="block03fill">
-    <path d="m214.78873,691.60162,11.26761,7.04225"/>
-    <path d="m214.08451,678.22134,23.23943,19.01408"/>
-    <path d="m216.19718,669.77063,35.21127,26.05634"/>
-    <path d="m216.90141,661.31993,47.1831,33.09859"/>
-    <path d="m216.19718,650.05232,64.78874,46.47888"/>
-    <path d="m216.19718,640.89739,78.16902,54.92958,1.4285-0.6942-0.02,1.39843"/>
-    <path d="m216.19718,630.33401c33.44553,22.56966,60.23028,43.28248,91.5493,67.60564"/>
-    <path d="m234.50704,630.33401,73.23944,56.33803"/>
-    <path d="m247.1831,628.92556,59.85915,43.66197"/>
-    <path d="m262.67606,626.10866,43.66197,35.21127"/>
-    <path d="m279.57746,627.51711,31.69015,25.35212"/>
-    <path d="m292.25352,626.81289,14.78873,12.67605"/>
-   </g>
-   <g id="block04fill">
-    <path d="m321.12676,671.17908,5.6338,6.33803"/>
-    <path d="m320.42254,659.91148,6.33802,6.33803,0,0,0-0.70423"/>
-    <path d="m319.71831,645.82697,7.04225,7.04225"/>
-    <path d="m321.12676,635.96782,5.6338,6.33802"/>
-    <path d="m320.42254,626.10866,4.92957,6.33803"/>
-   </g>
-   <g id="block05fill">
-    <path d="m335.91549,650.75655,7.04226,4.92958"/>
-    <path d="M335.91549,643.7143,350,654.27768"/>
-    <path d="m336.61972,635.96782,25.35211,18.30986"/>
-    <path d="m335.21127,628.22134c23.883,11.35954,27.99477,19.89462,40.14084,29.57746"/>
-    <path d="m349.29577,627.51711c14.72097,11.13305,30.89936,23.14056,36.61972,28.87324"/>
-    <path d="m361.97183,626.81289c17.99535,11.63225,26.97361,20.25881,33.80282,28.16901"/>
-    <path d="m378.16901,627.51711,30.28169,28.16902"/>
-    <path d="m389.43662,627.51711,14.78873,13.38028"/>
-    <path d="m400,626.81289,5.6338,5.6338"/>
-   </g>
-   <g id="block06fill">
-    <path d="m418.30986,627.51711,6.33803,3.52113"/>
-    <path d="m426.76056,627.51711,5.63381,3.52113,0,0,1.40845,0.70422"/>
-    <path d="m436.61972,626.81289,7.74647,4.22535"/>
-    <path d="m450.70423,626.10866,6.33802,4.22535"/>
-    <path d="m463.38028,626.81289,7.74648,4.22535"/>
-    <path d="m475.35211,627.51711,6.33803,2.8169"/>
-    <path d="m485.21127,626.81289,6.33803,3.52112"/>
-    <path d="m495.77465,626.10866,7.04225,2.8169,0.70423,1.40845,1.40845-1.40845"/>
-    <path d="m508.4507,626.81289,6.33803,3.52112"/>
-   </g>
-   <g id="block07fill">
-    <path d="m526.05634,595.82697,9.15493-9.85915,0,0"/>
-    <path d="m528.16901,604.9819,15.49297-16.19718"/>
-    <path d="m529.57746,613.4326c8.35045-8.87006,20.54154-17.54776,25.35212-24.64788"/>
-    <path d="m542.95774,614.13683c11.89334-10.6415,21.79829-20.28881,22.53522-25.35211"/>
-    <path d="m558.4507,612.02415c10.49427-10.05934,12.94916-16.09899,16.19719-22.53521"/>
-    <path d="m569.71831,612.02415,8.4507-13.38028"/>
-    <path id="m576.05634,614.13683,5.6338-7.74648"/>
-   </g>
-   <g id="block08fill">
-    <path d="m590.84507,567.65796,4.92958-4.92958"/>
-    <path d="m588.73239,580.33401,5.66388-5.60373"/>
-    <path d="m589.43662,587.37627,5.6338-5.63381"/>
-    <path d="m590.84507,597.23542,5.30675-4.19528"/>
-    <path d="m590.14085,604.9819,5.66387-3.88827"/>
-    <path d="m590.14085,611.31993,3.52112-2.11268"/>
-   </g>
-   <g id="block09fill">
-    <path d="m604.22535,562.02415,10.56338-8.4507"/>
-    <path d="m605.27668,570.51496c2.21488-2.9937,8.55919-9.08447,14.44163-14.82883"/>
-    <path d="m607.74648,575.40444,10.56338-9.85916"/>
-    <path d="m605.6338,585.26359,13.38028-11.97183"/>
-    <path d="m605.6338,596.5312,14.08451-14.78874"/>
-    <path d="m605.6338,603.57345,15.49296-13.76748"/>
-    <path d="m606.33803,612.02415,13.38028-11.97183"/>
-    <path d="m612.28886,615.89239,8.13368-8.09359"/>
-   </g>
-   <g id="block10fill">
-    <path d="M628.16901,537.73339,655.6338,513.0855"/>
-    <path d="m626.76056,547.23542,40.14085-34.50704"/>
-    <path d="m628.87324,526.81289,10.56338-11.26761"/>
-    <path d="m628.87324,556.39035,50-42.25352"/>
-    <path d="M629.57746,569.77063,694.3662,516.24951"/>
-    <path d="m630.28169,581.74246,73.94366-65.49295"/>
-    <path d="m630.28169,593.7143,85.21127-73.94367"/>
-    <path d="m639.43662,615.54528c20.1835-11.81612,48.62192-38.8358,83.80282-71.12676"/>
-    <path d="m630.98592,606.39035c27.59507-22.19601,55.21183-44.41371,90.14084-73.94366"/>
-    <path d="M716.90141,614.84106,726.76056,602.165"/>
-    <path d="m703.52113,615.54528c5.19837-10.27775,13.16307-17.39574,18.30986-23.94366"/>
-    <path d="m685.21127,615.54528,37.32394-40.14084"/>
-    <path d="m662.67606,616.24951c7.80258-4.23939,67.60816-57.21895,58.4507-54.92958"/>
-   </g>
-   <g id="block11fill">
-    <path d="m739.43662,497.23542,8.4507-5.6338"/>
-    <path d="m737.68106,510.2686,22.53521-19.71831"/>
-    <path d="m737.32394,523.99599c8.70857-3.16727,19.01439-14.32077,29.57747-26.76057"/>
-    <path d="m735.91549,540.19317c11.34056-9.83844,23.0945-19.541,31.69014-30.28169"/>
-    <path d="m738.02817,553.57345,26.76056-23.94366c-4.09558-1.02742,0.14165-0.70423,2.11268-0.70423"/>
-    <path d="m735.21127,570.47486,30.98591-26.05634"/>
-    <path d="m736.61972,581.74246,29.57746-24.64788"/>
-    <path d="m738.02817,595.82697,25.35211-23.23944"/>
-    <path d="m738.4016,608.09952,26.76056-23.94366"/>
-    <path d="M746.47887,614.84106,765.49296,596.5312"/>
-    <path d="m757.04225,616.24951,8.45071-7.74648"/>
-   </g>
-   <g id="block12fill">
-    <path d="m777.46479,457.7988,9.15493-6.33803"/>
-    <path d="M778.82171,465.92316,794.3662,451.46077"/>
-    <path d="m778.87324,476.81289,20.42253-18.30986"/>
-    <path d="m778.16901,491.60162,22.53522-21.83099"/>
-    <path d="M778.87324,503.57345,800,482.44669"/>
-    <path d="m778.87324,514.13683,21.83099-18.30986"/>
-    <path d="m780.98592,527.51711c9.49807-8.10645,14.80425-13.67879,19.71831-19.01408"/>
-    <path d="m778.16901,544.41852c7.84393-7.00241,14.43236-11.49383,23.94366-21.83099"/>
-    <path d="m783.80282,554.9819c4.56218-5.90257,7.71537-11.33549,17.60563-19.01409"/>
-    <path d="m780.28169,571.88331,20.42253-17.60564"/>
-    <path d="M781.69014,586.67204,800,569.06641"/>
-    <path d="m779.57746,598.64387,19.01409-14.78873"/>
-    <path d="M779.57746,609.91148,798.59155,593.7143"/>
-    <path d="m790.84507,612.02415,9.85916-8.4507"/>
-   </g>
-  </g>
-  <g id="widthConnectors" stroke-dasharray="none" fill="none">
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-	<path id="blockWidthConnector1" d="m 462.81168,392.93247 c 7.12103,17.659 13.63437,23.06742 62.68143,19.19076"/>
-  	<g id="blockWidthConnector2">
-   		<path d="M 766.82573,412.92316 C 783.90869,412.2983 792.00582,428.48206 793,440.36218"/>
-   		<path d="m777.23577,131.08635h25.20325" transform="translate(0,308.2677)"/></g>
-  </g> 
-  <g id="heightConnectors" stroke-dasharray="none" fill="none">
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>	
-  	<path id="blockHeightConnector1" d="m603.47826,381.40566c112.11951-0.0181,304.35789-16.75581,318.73454,46.95652"/>
-  	<g id="blockHeightConnector2">
-   		<path d="m935.34783,488.36218c9.34853,31.41969 -26.76618,47.56921 -117.34783,49"/>
-   		<path d="m812.19512,138.40343c4.38201,58.04055,7.74095,115.05801,5.69106,166.66666" transform="translate(0,308.2677)"/></g>
-  </g>  
-  <g id="bcConnectors1" stroke-dasharray="none" fill="none">
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>	
-  	<path id="benefitOptionConnector1" d="m92.141894,617.95195c12.879906-21.34762,34.162656-11.85912,83.511086-15.60784,50.3225-5.1289,113.0249,8.63424,110.76433-17.0839,41.63963,23.16201,106.28523,22.78211,118.92992,17.80463,92.04057-6.31227,101.76198-8.89606,113.59364,6.93082" stroke-dasharray="none" fill="none"/>
-  	<path id="costlyOptionConnector1" d="m530.9037,628.44793c23.02432,25.68689,21.9189,5.76386,120.0193,16.69225,14.61691,12.65139,10.03667,20.22006,16.7342,22.31227,3.63143-14.41652,9.64693-16.91266,15.88141-18.31394,95.61594-2.20823,112.78708-6.67436,119.85155-20.81641"/>
-  </g>
-  <g id="bcConnectors2" stroke-dasharray="none" fill="none">
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-  	<path id="benefitOptionConnector2" d="m287.82609,550.97088c5.39153-5.64244,4.11076-26.55246-6.08696-47.82609" />
-  	<path id="costlyOptionConnector2" d="m666.08696,687.49261c-0.15472,22.37642-18.6333,31.64637-56.46051,40.29395"/>
-  </g>
-  <g id="abatementGroup" stroke-dasharray="none" fill="none">
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-	<path id="abatementConnector" d="m890.91145,639.4306c1.56549,20.52491,8.1851,30.95367,24.14539,39.07538"/>
-	</g>
-  <g id="prioritisationGroup" stroke-dasharray="none" fill="none">
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-	<path id="prioritisationHeaderBox" d="m613.94,858.30448c-106.0817,6.91513-194.57815,0.67251-260.22607,1.41421,0.99295,14.2569,0.35749,18.47558,0,27.57716,105.59097-2.25344,189.18031-1.48349,267.57709,0v-28.99138h-9.55634"/>
-  	<path id="lowCostCircle" d="m116.52174,855.3187c-28.296393,3.86793-42.12072,17.87563-24.347827,29.56523,15.085337,8.6076,35.578047,11.07512,43.478257,3.47825,27.50908-29.64132-4.19245-33.81742-16.52174-33.91304"/>
-  	<path id="lowestCostConnector" d="m118,855.36218c6.05519-14.92641,13.58333-27.8889,12-53"/>
-	<g id="prioritisationArrow1">
-   		<path d="m151.10799,873.36347c29.56796,1.8747,145.27908-6.44952,193.36036-1.02051"/>
-   		<path d="m330.64883,860.58604c9.67913,4.25626,9.19479,5.49939,13.99877,12.23516l-13.72248,8.20937"/></g>  
-	<g id="prioritisationArrow2">
-		<path d="m621.82773,872.13383c33.52529-3.6049,185.9721-1.0523,218.09172,2.7519"/>
-		<path d="m826.59281,865.81815c9.67913,4.25626,11.64552,4.75079,14.05001,9.08707l-13.98293,7.47927"/></g>  
-    <path id="highestCostCircle" d="m876.20868,858.7477c-28.29639,3.86793-43.85985,22.22346-29.56521,29.56523,15.08533,8.6076,28.70975,6.67605,44.34782-0.86958,22.01274-16.80704,11.45972-27.73046-14.78261-27.82608"/>
-    <g id="highestCostConnector">
-   		<path d="M875.4176,857.2924c-73.39212-90.42984-72.48983-131.71224-81.90178-214.74632"/>
-   		<path d="m792.30691,326.08229c-0.6179-2.93993-1.93441-6.69667-1.25-11.13008" transform="translate(0,308.2677)"/></g>
-  </g>	  
-  <g id="qConnectors" stroke-dasharray="none" fill="none"> 
-	<path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-  	<g id="qConnector01" >
-   		<path d="M45.679012,593.4772c-43.876315,47.61038,40.244734,83.78649,141.97532,62.96297" transform="translate(0,308.2677)"/>
-	<path d="m76.502429,964.9895c-20.485123,33.05539,37.838611,32.79222,79.063861,40.2766"/></g>
-  	<path id="qConnector2" d="m309.85508,1006.8227c13.1076-3.3018,35.45796-5.3758,63.25745-2.4691"/>
-  	<path id="qConnector3" d="m523.60011,1007.6832c13.47498-3.2454,30.42284-1.3743,46.91357-1.3419"/>
-  	<path id="qConnector4" d="m723.61381,1007.9177c-0.81104-3.2504,54.77171-4.3892,64.04051-4.9382"/>
-</g>
-  <g id="manGroup" stroke-dasharray="none" fill="none">
-   <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-   <path d="m971.98868,952.76309c-29.48664-1.0938-26.29209,17.6296-16.8268,25.51849,9.98885,9.24905,17.51036,7.67356,27.86521-0.43439,7.93797-12.94166,1.33813-23.29698-16.53841-24.64973"/>
-   <path d="m964.37037,680.39695c25.90089-8.16056,24.14561-9.82525,37.99083-19.53396-6.2057-6.08453-7.17049-8.91519-13.98774-15.48764" transform="translate(0,308.2677)"/>
-   <path d="m954.77469,950.14305c-25.20491,6.3002-17.46054,4.92509-19.53704,6.58025,5.57078,14.67643,27.18317,30.79042,29.41358,32.17592"/>
-   <path d="m963.4321,693.71177c6.67482,13.38968,6.86237,20.0082,9.39197,28.66049" transform="translate(0,308.2677)"/>
-   <path d="m956.74103,953.38888c-3.11084-0.69217-3.82182-1.47692-2.25037-2.79073,0.54962-0.46932,0.49093-3.64154,6.75037,1.38512"/>
-   <path d="m984.37083,948.46193c3.45296,0.66423,5.35211,3.81639,3.60784,5.07717-1.84084,1.47817-3.5034,1.14647-5.41169-0.14933"/>
-   <path d="m964.75,680.09448c0.75,5.25-1.75,16.5-1.75,16.5-10.32404,11.19906-15.0922,19.96742-14.75,26.5" transform="translate(0,308.2677)"/>
-   <path d="m944.98953,1032.822c-3.35269-0.5353-5.72438-1.4924-4.03077-2.5084,1.78738-1.1911,3.92935-2.5069,5.78224-1.4627,2.60813,2.3259,1.35782,3.8375-1.75147,3.8508"/>
-   <path d="m975.01047,1034.0501c3.35269-0.5353,7.04365-1.2285,5.35004-2.2445-1.78738-1.1911-5.24862-2.7708-7.10151-1.7266-2.60813,2.3259-1.35782,3.8375,1.75147,3.8508"/>
-   <path d="m960.28802,968.27417c-0.55032-2.70023-1.80209-5.28355,3.81834-9.01223"/>
-   <path d="m971.61707,959.66805c-2.4142,2.76844-5.59244,5.30767-2.88625,9.61223"/>
-   <path d="m962,668.29448c1.04891-0.80296,0.62121-1.85202,5.6-2" transform="translate(0,308.2677)"/>
-  </g>
-</g>	
-</svg>
-	<div id="play01">
-		<svg id="button01">
-		  <g stroke-dasharray="none" fill="none">
-			  <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-			  <path d="m11.060262,11.806307c3.47815,39.188559,5.91396,73.686609,5.34351,94.656483,20.45053-13.394944,43.7529-29.166434,76.33588-52.671754-23.00177-13.46682-43.11413-26.57247-81.67939-41.984729z"/>
-			  <path d="m9.6175282,9.8850436-3.26753,24.50203,4.2011198,83.888286,6.06828-12.87395"/>
-			  <path d="M10.922867,118.66116,89.393384,65.682655,92.706348,53.075064"/></g></svg></div>
-	<div id="play02" class="play">		 
-		<svg id="button02">
-		  <g stroke-dasharray="none" fill="none">
-			  <path class = "dummy" d = "m0,0 c0,0 0,-0 -0,-0"/>
-			  <path d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z"/>
-			  <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107"/>
-  	<path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364"/></g></svg></div>
-	<div id="play03" class="play">
-		<svg id="button03">
-		  <g stroke-dasharray="none" fill="none">
-			  <path d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z"/>
-			  <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107"/>
-  	<path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364"/></g></svg></div>
-	<div id="play04" class="play">
-		<svg id="button04">
-		  <g stroke-dasharray="none" fill="none">
-			  <path d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z"/>
-			  <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107"/>
-  	<path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364"/></g></svg></div>
-	<div id="play05" class="play">
-		<svg id="button05">
-		  <g stroke-dasharray="none" fill="none">
-			  <path d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z"/>
-			  <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107"/>
-  	<path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364"/></g></svg></div>
-	<div id="play06" class="play">
-		<svg id="button06">
-		  <g stroke-dasharray="none" fill="none">
-			  <path d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z"/>
-			  <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107"/>
-  	<path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364"/></g></svg></div>
-	<div id="play07" class="play">?!?!!</div>	
-</div>
 
-<script>
- 	//animation for sketchy MACC infographic
-	var color = "";	
-		function rand(min, max) {return min + Math.random() * (max - min);}	
-		function getRandomColor() {
-			var h = rand(1, 360);
-			var s = rand(90, 100);
-			var l = rand(40, 80);
-			return color = 'hsla(' + h + ',' + s + '%,' + l + '%,' + 0.70 +')';
-		}
-	getRandomColor()
-	var group = 0;	//group svg elements for drawing phases	
-					// element											time	delay	color
-	var svgGroups = [[document.getElementById("frame"),					0.75, 	0.05,	"#000"], 		// 0
-					 [document.getElementById("axis"),					0.5, 	0.2,	"#000"], 		// 1
-					 [document.getElementById("blocks"),				0.25, 	0.05,	color], 		// 2
-					 [document.getElementById("blockFills"),			0.25,	0.23,	color],			// 3
-				 	 [document.getElementById("widthConnectors"),		0.5,	0.0,	"#000"],		// 4 
-				 	 [document.getElementById("heightConnectors"),		0.75,	0.0,	"#000"],		// 5
-					 [document.getElementById("bcConnectors1"),			1.0,	0.0,	"#000"],		// 6 
-				 	 [document.getElementById("bcConnectors2"),			0.5,	0.0,	"#000"],		// 7
- 					 [document.getElementById("abatementGroup"),		0.6,	0.0,	"#000"],		// 8 
-					 [document.getElementById("prioritisationGroup"),	0.5,	0.0,	"#000"],		// 9 
-					 [document.getElementById("qConnectors"),			0.5,	0.0,	"#000"],		// 10 
-				 	 [document.getElementById("manGroup"),				0.2,	0.1,	"#000"],		// 11
-					 [document.getElementById("button01"),				0.5,	0.0,	"#000"],		// 12	 
-					 [document.getElementById("button02"),				0.2,	0.5,	"#000"],		// 13	 
-					 [document.getElementById("button03"),				0.0,	0.0,	"#000"],		// 14	 
-					 [document.getElementById("button04"),				0.0,	0.0,	"#000"],		// 15	 
-					 [document.getElementById("button05"),				0.0,	0.0,	"#000"],		// 16	 
-					 [document.getElementById("button06"),				0.0,	0.0,	"#000"],		// 17	
-					 ];  
-	var NS="http://www.w3.org/2000/svg";
-	var Animation = new TimelineMax();    
-    Animation.pause();
-	animate(12);	// draw start button
-	
-	function animate(group)	{
-		var svgPaths = svgGroups[group][0].getElementsByTagNameNS(NS,"path");	
-		Animation.play()
-		for(var i = 0; i < svgPaths.length; i++){
-			var line = svgPaths[i];
-			var time = svgGroups[group][1];
-			var dims = line.getTotalLength();
-			var linearea = dims
-			var strokeWidth = (line.getAttribute("stroke-width") == null)?3:line.getAttribute("stroke-width");
-			line.style.strokeDasharray = (linearea)+" "+(linearea);
-			line.style.strokeDashoffset = ((/Firefox/i.test(navigator.userAgent))? linearea/strokeWidth : linearea);
-			line.style.stroke = svgGroups[group][3];
-			line.style.strokeWidth = 2.5;
-			line.style.strokeLinecap = "round";
+    <div id="animation">
+        <svg id="sketchyMACC" width="100%" viewBox="0 0 1050 760">
+            <g id="sketch" transform="translate(0,-310)">
+                <g id="narrativeText" font-family="humour" fill="#000000">
+                    <text id="headerLabel" class="narrative01" style="text-anchor:middle;text-align:center;" font-size="20px" line-height="125%" font-size="20px" y="338.47192" x="523.26294">
+                        <tspan y="338.47192" x="523.26294">Reading the Marginal Abatement Cost Curve: a Little sketch
+                        </tspan>
+                    </text>
+                    <text id="yAxisLabel" class="narrative02" transform="matrix(-0.00644261,-0.99997925,0.99997925,-0.00644261,0,0)" line-height="125%" font-size="16px" y="61.188354" x="-750.21002">
+                        <tspan y="61.188354" x="-750.21002">Cost per unit of Abatement</tspan>
+                    </text>
+                    <text id="xAxisLabel" class="narrative02" style="text-anchor:middle;text-align:center;" line-height="100%" font-size="16px" y="616.0553" x="890.31244">
+                        <tspan y="616.0553" x="894.17181">Emissions</tspan>
+                        <tspan y="632.0553" x="890.31244">abatement</tspan>
+                    </text>
+                    <text id="blockLabel" class="narrative03" style="text-anchor:middle;text-align:center;" font-size="16px" y="382.41937" x="399.75165" line-height="125%">
+                        <tspan y="382.41937" x="359.75165">each block represents an option for reducing emissions
+                        </tspan>
+                    </text>
+                    <text id="blockHeightText" class="narrative04" style="text-anchor:middle;text-align:center;" transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="474.97787" x="861.0661" line-height="125%">
+                        <tspan y="474.97787" x="863.47821">The height and position of</tspan>
+                        <tspan y="487.47787" x="863.47821">each block either below or </tspan>
+                        <tspan y="499.97787" x="863.47821">above the X-Axis, shows the </tspan>
+                        <tspan y="512.47791" x="863.47821"> &quot;Cost per unit of abatement&quot; </tspan>
+                    </text>
+                    <text id="blockWidthText" class="narrative04" style="text-anchor:middle;text-align:center;" transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="436.6109" x="606.59552" line-height="125%">
+                        <tspan y="436.6109" x="609.00763">The width of a block shows the emissions</tspan>
+                        <tspan y="449.1109" x="606.59552">abatement potential of the option</tspan>
+                    </text>
+                    <text id="abatementText" class="narrative05" style="text-anchor:middle;text-align:center;"font-size="10px" y="676.29614" x="924.35229" line-height="125%">
+                        <tspan style="text-anchor:middle;text-align:center;" font-size="16px" y="676.29614"  x="924.35229" />
+                        <tspan y="691.29614" x="926.7644">Each option adds to the </tspan>
+                        <tspan y="703.79614" x="926.7644">total abatement, which is </tspan>
+                        <tspan y="716.29614" x="926.7644">usually shown on a consistent </tspan>
+                        <tspan y="728.79614" x="926.7644">time basis like emissions per</tspan>
+                        <tspan y="741.29614" x="926.7644">year - because projects </tspan>
+                        <tspan y="753.79614" x="926.7644">generally reduce emissions</tspan>
+                        <tspan y="766.29614" x="926.7644">over differeent timeframes..</tspan>
+                    </text>
+                    <text id="benefitOptionLabel" class="narrative06" style="text-anchor:middle;text-align:center;" font-size="16px" y="567.19147" x="288.03159" line-height="125%">
+                        <tspan y="567.19147" x="288.03159">Beneficial options</tspan>
+                    </text>
+                    <text id="costlyOptionLabel" class="narrative06" style="text-anchor:middle;text-align:center;" font-size="16px" y="683.52704" x="669.35693" line-height="125%">
+                        <tspan y="683.52704" x="669.35693">Costly options</tspan>
+                    </text>
 
-			Animation.add(TweenMax.to(line.style,time,{strokeDashoffset:0,ease:Sine.easeInOut,onUpdate:function(){
-				var n = document.createTextNode(' ');
-				document.body.appendChild(n);
-				document.body.removeChild(n);
-			}}),(i>0)?'-= '+ svgGroups[group][2] + '':"");
-			}    
-	}	
+                    <text id="benefitOptionText" class="narrative07" style="text-anchor:middle;text-align:center;" transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="488.87845" x="264.23639" line-height="125%">
+                        <tspan y="488.87845" x="266.6485">All of these options are predicted to be financial benefits.</tspan>
+                        <tspan y="501.37845" x="266.6485">They save you money once you take into account all their </tspan>
+                        <tspan y="513.87842" x="266.6485">costs and benefits over its lifetime. Visually they have a </tspan>
+                        <tspan y="526.37848" x="264.23639">&quot;negative&quot; cost per unit and are positioned &apos;Below&apos; the x-axis</tspan>
+                    </text>
+                    <text id="costlyOptionText" class="narrative07" style="text-anchor:middle;text-align:center;"transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="793.00116" x="563.80829" line-height="125%">
+                        <tspan y="793.00116" x="563.80829">these options have a net cost To abate emissions.</tspan>
+                        <tspan y="805.50116" x="566.2204">all things considered - financially at least - it's </tspan>
+                        <tspan y="818.00116" x="566.2204">expected that their costs will outweigh their benefits</tspan>
+                        <tspan y="830.50116" x="566.2204">over the lifetime of the option. Visually THey have a "Positive"</tspan>
+                        <tspan y="843.00116" x="563.80829">Cost per unit and are positioned "above" the x-axis</tspan>
+                    </text>
+                    <text id="prioritisationLabel" class="narrative08" style="text-anchor:middle;text-align:center;"line-height="125%" font-size="16px" y="877.40735" x="482.5318">
+                        <tspan y="877.40735" x="482.5318"> Prioritisation options.....by cost</tspan>
+                    </text>
+                    <text id="lowestCostLabel" class="narrative08" style="text-anchor:middle;text-align:center;" transform="matrix(1.0689809,-0.01662634,0.01900526,0.93517481,0,0)" font-size="11px"   y="932.89001" x="93.598572" line-height="125%">
+                        <tspan y="932.89001" x="96.251892">Lowest </tspan>
+                        <tspan y="946.64001" x="93.598572">cost</tspan>
+                    </text>
+                    <text id="highestCostLabel" class="narrative08" style="text-anchor:middle;text-align:center;" transform="matrix(0.99974066,0.02277322,-0.02277322,0.99974066,0,0)" font-size="10px" y="853.77307" x="894.98285" line-height="125%">
+                        <tspan y="853.77307" x="897.39496">Highest </tspan>
+                        <tspan y="866.27307" x="894.98285">cost</tspan>
+                    </text>
+                    <text id="prioritisationText" class="narrative08" style="text-anchor:middle;text-align:center;" transform="matrix(1.0691098,-9.4160722e-4,0.00528331,0.93535297,0,0)" font-size="10px" y="972.16168" x="455.01791" line-height="125%">
+                        <tspan y="972.16168" x="457.43002">The chart puts options in order (left to Right) of "cost per unit". So the cheapest options are on the left, and as you move right and "add" more</tspan>
+                        <tspan y="984.66168" x="457.43002">abatement, you always come across the option with the next lowest cost - this is the "marginal cost"; and puts the "M" in Macc. So in theory its cheapest </tspan>
+                        <tspan y="997.16168" x="457.43002">to start with those options on the left before moving right. Anything below the line (i.e. the x-axis) is financially beneficial - for economic-y and finance</tspan>
+                        <tspan y="1009.6617" x="457.43002">types, it has a positive rate of return and a positive Net Present Value. Generally these Look like pretty good investments. The rest of the options </tspan>
+                        <tspan y="1022.1617" x="457.43002">have a &quot;Cost&quot;, And its a cost you might be willing to pay, especially If you think reducing emissions and saving the planet is worth something!!!! </tspan>
+                    </text>
+                    <text id="question01" class="narrative09" style="text-anchor:middle;text-align:center;"
+                        line-height="100%" font-size="16px" y="998.55603" x="230.74493">
+                        <tspan y="998.55603" x="234.60431" font-weight="normal">So is this why </tspan>
+                        <tspan y="1014.556" x="230.74493" font-weight="normal">we're doing this...</tspan>
+                    </text>
+                    <text id="question02" class="narrative09" style="text-anchor:middle;text-align:center;"
+                        line-height="100%" font-size="16px" y="1001.6514" x="445.88303">
+                        <tspan y="1001.6514" x="449.7424"> To make better </tspan>
+                        <tspan y="1017.6514" x="445.88303">decisions? Right?</tspan>
+                    </text>
+                    <text id="question03" class="narrative09" style="text-anchor:middle;text-align:center;"
+                        line-height="100%" font-size="16px" y="1000.9681" x="648.45947">
+                        <tspan y="1000.9681" x="652.31885">And is that what </tspan>
+                        <tspan id="tspan3734" style="text-anchor:middle;text-align:center;" y="1016.9681" x="652.31885">
+                            I'm seeing here? </tspan>
+                    </text>
+                    <text id="question04" class="narrative09" style="text-anchor:middle;text-align:center;"
+                        line-height="100%" font-size="16px" y="995.21381" x="857.77466">
+                        <tspan y="995.21381" x="861.63403">but what am I </tspan>
+                        <tspan id="tspan4671" style="text-anchor:middle;text-align:center;" y="1011.2138" x="861.63403">
+                            not seeing!?? </tspan>
+                    </text>
+                </g>
 
-	//animation and narrative controls
-$(document).ready(function(){
-	//hide non-needed call buttons and text 
-	$("#play01").show();$("#play02").hide();$("#play03").hide();$("#play04").hide();$("#play05").hide();$("#play06").hide();$("#play07").hide();	 	
-	$(".narrative01").show();$(".narrative02").hide();$(".narrative03").hide();$(".narrative04").hide();$(".narrative05").hide();$(".narrative06").hide();$(".narrative07").hide();$(".narrative08").hide();$(".narrative09").hide();
-		
-	// funcion and button behaviour for playing animation
-		$("#play01").click(function(){
-			//call functions to animate and show text
-			$(".narrative02").delay(500).fadeIn();
-			$(".narrative03").delay(6000).fadeIn(2000);
-			animate(0);	animate(1); animate(2);animate(3);animate(13);
-			//reset for new button	
-			$("#play01").fadeOut(100);$("#play02").show();$("#play03").hide();$("#play04").hide();$("#play05").hide();$("#play06").hide();$("#play07").hide();
-		 })
-	 	$("#play02").click(function(){
-			//call functions to animate and show text
-			$("#blockWidthText").delay(500).fadeIn();
-			$("#blockHeightText").delay(2000).fadeIn();
-			animate(14); animate(4);	animate(5);
-			//reset for new button	
-			$("#play01").hide();$("#play02").hide();$("#play03").show();$("#play04").hide();$("#play05").hide();$("#play06").hide();$("#play07").hide();
-		 })
-	 	$("#play03").click(function(){
-			//call functions to animate and show text
-			$("#benefitOptionLabel").delay(500).fadeIn();
-			$("#costlyOptionLabel").delay(1500).fadeIn();
-			$("#benefitOptionText").delay(2000).fadeIn();
-			$("#costlyOptionText").delay(2750).fadeIn();		
-			animate(15); animate(6); animate(7);
-			
-			//reset for new button	
-			$("#play01").hide();$("#play02").hide();$("#play03").hide();$("#play04").show();$("#play05").hide();$("#play06").hide();$("#play07").hide();
-		 })		
- 	 	$("#play04").click(function(){
-			//call functions to animate and show text
-			$("#abatementText").delay(500).fadeIn();
-			animate(16); animate(8);
-			//reset for new button	
-			$("#play01").hide();$("#play02").hide();$("#play03").hide();$("#play04").hide();$("#play05").show();$("#play06").hide();$("#play07").hide();
-		 })		
- 	 	$("#play05").click(function(){
-			//call functions to animate and show text
-			$("#prioritisationLabel").fadeIn();
-			$("#lowestCostLabel").delay(500).fadeIn();
-			$("#highestCostLabel").delay(2500).fadeIn();
-			$("#prioritisationText").delay(4250).fadeIn();
-			animate(17); animate(9);	
-			//reset for new button	
-			$("#play01").hide();$("#play02").hide();$("#play03").hide();$("#play04").hide();$("#play05").hide();$("#play06").show();$("#play07").hide();
-		 })					
-		$("#play06").click(function(){
-			//call functions to animate and show text
-			$("#question01").delay(500).fadeIn();
-			$("#question02").delay(1000).fadeIn();
-			$("#question03").delay(1500).fadeIn();
-			$("#question04").delay(2000).fadeIn();
-			animate(10);animate(11);	
-			//reset for new button	
-			$("#play01").hide();$("#play02").hide();$("#play03").hide();$("#play04").hide();$("#play05");$("#play06").hide();$("#play07").fadeIn(10000);
-		 })					
-	 })
-	
-</script>
+                <g id="frame" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="headerBorder"
+                        d="m877.8388,322.21068c-279.80842,3.15617-539.18552-4.99776-706.15612-3.47464,2.63146,17.56893,0.0778,16.6807-0.86956,27.89667,582.75852,0.9891,504.28848,2.35368,708.24602,2.6087l-0.86957-27.9003" />
+                    <path id="border"
+                        d="m172,23.094482-149,1c-2.209521,90.648788-3.763203,181.31357-4.660882,271.98484-1.419067,143.33466-1.198753,286.68554,0.660882,430.01516h1010l-0.8892-357.00047-2.1108-346.99953-144-1.999998"
+                        transform="translate(0,308.2677)" />
+                </g>
+                <g id="axis" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <g id="yAxis">
+                        <path d="m60.789332,509.91014c3.29177-17.48765-0.780051-35.40227-0.850001-57.02124" />
+                        <path
+                            d="m49.252917,451.71037c7.357066,1.26706,14.714131,0.85402,22.071197,0.005-3.750182-5.27778-7.500365-7.73051-11.250547-9.29918-4.00133,2.17956-6.632764,5.72901-9.641849,8.90081" />
+                        <path d="m62.123036,797.71404,0-43.36632" />
+                        <path
+                            d="m72.113043,796.18827-21.73913,2.6087c4.056443,3.47826,5.259673,6.95652,13.104348,10.43478z" />
+                    </g>
+                    <g id="xAxisGroup">
+                        <path d="m76.759962,620.69024c277.01619,5.30155,452.27532,0.22429,766.4635,0.27453" />
+                        <path d="m935.67596,620.6195c11.86523,1.96239 19.37196,0.083 32.82929,0.10162" />
+                        <path
+                            d="m979.20994,620.53651c-8.1986-3.76408-6.82698-4.55794-10.2591-5.95553-0.72906,4.17395-1.03485,7.19446,0,13.89624,1.7382-0.72519,6.195-5.35735,10.2591-7.94071z" />
+                    </g>
+                </g>
+                <g id="blocks" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="block01"
+                        d="m89.302763,623.36517c3.97048,60.26265,5.927724,121.67579,2.892224,171.46732h71.012823l-1.82084-169.95548z" />
+                    <path id="block02" d="m168.66706,627.11005-0.37758,90.11987h36.52547l0.37758-92.46433z" />
+                    <path id="block03"
+                        d="m211.27419,625.57736,2.62826,78.56434c46.3344-3.37046,65.99802-2.93081,80.89031-1.80954,7.48257,0.56338,13.7606,1.29884,21.6119,1.80954l-2.62826-80.57882z" />
+                    <path id="block04"
+                        d="m319.94594,624.62736,0.18432,57.15841,7.18857,0c2.59949-14.21948,0.42566-37.98559-0.18432-58.62401z" />
+                    <path id="block05"
+                        d="m333.20615,625.46853,1.95245,34.0759c13.40985-2.99301,50.25684-0.12674,76.14571,0l-1.95245-34.94963c-8.35211,2.91902-33.22996-2.0108-76.14571,0.87373z" />
+                    <path id="block06" d="m413.98485,625.36858,2.84295,8.37285,106.93267-1.31413,1.09944-7.27341z" />
+                    <path id="block07"
+                        d="m525.06397,584.62954c0.36665,10.73326-5.22293,15.51028,1.49278,32.5926h58.21814l-1.49277-33.42831z" />
+                    <path id="block08"
+                        d="m588.68573,559.54908,0.18432,57.15841,7.18857,0c2.28441-24.23304,0.92568-41.1798-0.18432-58.62401z" />
+                    <path id="block09" d="m602.88523,552.90907,0.50443,65.55873,19.67296,0-0.50444-67.23973z" />
+                    <path id="block10"
+                        d="m625.22545,515.68894,2.62826,102.50221,102.50221,0-2.62826-105.13048c-35.01082-5.00256-76.32398-7.10195-102.50221,2.62827z" />
+                    <path id="block11"
+                        d="m733.90753,489.70847,0.93655,130.06319c12.17516-0.95708,24.35031-2.40834,36.52547,0l-0.93655-133.39814z" />
+                    <path id="block12"
+                        d="m775.94035,452.02703,0.67181,164.39226,26.20068,0c0.11777-56.37334,5.42578-115.34179-0.67181-168.60745-25.36538,1.40506-19.68495,2.81013-26.20068,4.21519z" />
+                </g>
+                <g id="blockFills" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <g id="block01fill">
+                        <path d="m93.661972,783.85514,15.492958,9.15493" />
+                        <path d="m95.774648,772.58753,28.873242,20.42254" />
+                        <path d="m95.774648,757.09458c13.615022,7.33392,27.230052,21.09061,40.845072,33.80281" />
+                        <path d="m95.774648,741.60162c36.431282,29.24166,42.058152,36.48017,53.521122,47.88732" />
+                        <path d="m94.366197,722.58753c25.909243,26.35891,45.712193,42.54067,66.197183,59.85916" />
+                        <path d="m94.366197,712.72838c28.278763,24.84039,48.224753,40.1576,63.380283,50" />
+                        <path d="m95.070423,702.165,59.859157,45.07042" />
+                        <path d="m93.661972,687.37627,66.901408,50.70422" />
+                        <path d="m93.661972,675.40444,62.676058,47.18309" />
+                        <path d="m97.887324,664.84106c21.143316,15.98452,41.465846,30.87465,57.042256,39.43662" />
+                        <path d="m94.366197,650.75655c19.768723,8.41762,41.846273,26.07054,63.380283,41.54929" />
+                        <path d="m92.253521,637.37627,64.084509,40.14084" />
+                        <path d="m99.295775,628.92556c20.961615,14.77576,39.109365,25.33072,56.338025,34.50704" />
+                        <path d="m120.42254,629.62979c13.70048,4.84412,25.26501,11.82418,35.21126,20.42253" />
+                        <path d="m135.21127,627.51711,20.42253,13.38028" />
+                        <path d="m147.88732,627.51711,9.15493,7.04226,0,0,0,0,0,0,0.70423,0" />
+                    </g>
+                    <g id="block02fill">
+                        <path d="m168.74341,708.23236,10.71753,6.13505-0.59541-1.02251" />
+                        <path d="m170.42254,698.64387,21.83098,17.60564" />
+                        <path d="m171.12676,688.08049,32.39437,26.76057" />
+                        <path d="m168.30986,674.70021,32.39437,26.05634" />
+                        <path d="m171.83099,663.4326,28.87324,23.2394" />
+                        <path d="m169.71831,653.57345,31.69014,20.42254" />
+                        <path d="m172.53521,642.30584,26.76056,17.60564" />
+                        <path d="m173.23944,632.44669,28.87324,20.42253" />
+                        <path d="m182.39437,628.22134,18.30986,13.38028" />
+                        <path d="m194.3662,626.81289,7.04225,4.92957" />
+                    </g>
+                    <g id="block03fill">
+                        <path d="m214.78873,691.60162,11.26761,7.04225" />
+                        <path d="m214.08451,678.22134,23.23943,19.01408" />
+                        <path d="m216.19718,669.77063,35.21127,26.05634" />
+                        <path d="m216.90141,661.31993,47.1831,33.09859" />
+                        <path d="m216.19718,650.05232,64.78874,46.47888" />
+                        <path d="m216.19718,640.89739,78.16902,54.92958,1.4285-0.6942-0.02,1.39843" />
+                        <path d="m216.19718,630.33401c33.44553,22.56966,60.23028,43.28248,91.5493,67.60564" />
+                        <path d="m234.50704,630.33401,73.23944,56.33803" />
+                        <path d="m247.1831,628.92556,59.85915,43.66197" />
+                        <path d="m262.67606,626.10866,43.66197,35.21127" />
+                        <path d="m279.57746,627.51711,31.69015,25.35212" />
+                        <path d="m292.25352,626.81289,14.78873,12.67605" />
+                    </g>
+                    <g id="block04fill">
+                        <path d="m321.12676,671.17908,5.6338,6.33803" />
+                        <path d="m320.42254,659.91148,6.33802,6.33803,0,0,0-0.70423" />
+                        <path d="m319.71831,645.82697,7.04225,7.04225" />
+                        <path d="m321.12676,635.96782,5.6338,6.33802" />
+                        <path d="m320.42254,626.10866,4.92957,6.33803" />
+                    </g>
+                    <g id="block05fill">
+                        <path d="m335.91549,650.75655,7.04226,4.92958" />
+                        <path d="M335.91549,643.7143,350,654.27768" />
+                        <path d="m336.61972,635.96782,25.35211,18.30986" />
+                        <path d="m335.21127,628.22134c23.883,11.35954,27.99477,19.89462,40.14084,29.57746" />
+                        <path d="m349.29577,627.51711c14.72097,11.13305,30.89936,23.14056,36.61972,28.87324" />
+                        <path d="m361.97183,626.81289c17.99535,11.63225,26.97361,20.25881,33.80282,28.16901" />
+                        <path d="m378.16901,627.51711,30.28169,28.16902" />
+                        <path d="m389.43662,627.51711,14.78873,13.38028" />
+                        <path d="m400,626.81289,5.6338,5.6338" />
+                    </g>
+                    <g id="block06fill">
+                        <path d="m418.30986,627.51711,6.33803,3.52113" />
+                        <path d="m426.76056,627.51711,5.63381,3.52113,0,0,1.40845,0.70422" />
+                        <path d="m436.61972,626.81289,7.74647,4.22535" />
+                        <path d="m450.70423,626.10866,6.33802,4.22535" />
+                        <path d="m463.38028,626.81289,7.74648,4.22535" />
+                        <path d="m475.35211,627.51711,6.33803,2.8169" />
+                        <path d="m485.21127,626.81289,6.33803,3.52112" />
+                        <path d="m495.77465,626.10866,7.04225,2.8169,0.70423,1.40845,1.40845-1.40845" />
+                        <path d="m508.4507,626.81289,6.33803,3.52112" />
+                    </g>
+                    <g id="block07fill">
+                        <path d="m526.05634,595.82697,9.15493-9.85915,0,0" />
+                        <path d="m528.16901,604.9819,15.49297-16.19718" />
+                        <path d="m529.57746,613.4326c8.35045-8.87006,20.54154-17.54776,25.35212-24.64788" />
+                        <path d="m542.95774,614.13683c11.89334-10.6415,21.79829-20.28881,22.53522-25.35211" />
+                        <path d="m558.4507,612.02415c10.49427-10.05934,12.94916-16.09899,16.19719-22.53521" />
+                        <path d="m569.71831,612.02415,8.4507-13.38028" />
+                        <path id="m576.05634,614.13683,5.6338-7.74648" />
+                    </g>
+                    <g id="block08fill">
+                        <path d="m590.84507,567.65796,4.92958-4.92958" />
+                        <path d="m588.73239,580.33401,5.66388-5.60373" />
+                        <path d="m589.43662,587.37627,5.6338-5.63381" />
+                        <path d="m590.84507,597.23542,5.30675-4.19528" />
+                        <path d="m590.14085,604.9819,5.66387-3.88827" />
+                        <path d="m590.14085,611.31993,3.52112-2.11268" />
+                    </g>
+                    <g id="block09fill">
+                        <path d="m604.22535,562.02415,10.56338-8.4507" />
+                        <path d="m605.27668,570.51496c2.21488-2.9937,8.55919-9.08447,14.44163-14.82883" />
+                        <path d="m607.74648,575.40444,10.56338-9.85916" />
+                        <path d="m605.6338,585.26359,13.38028-11.97183" />
+                        <path d="m605.6338,596.5312,14.08451-14.78874" />
+                        <path d="m605.6338,603.57345,15.49296-13.76748" />
+                        <path d="m606.33803,612.02415,13.38028-11.97183" />
+                        <path d="m612.28886,615.89239,8.13368-8.09359" />
+                    </g>
+                    <g id="block10fill">
+                        <path d="M628.16901,537.73339,655.6338,513.0855" />
+                        <path d="m626.76056,547.23542,40.14085-34.50704" />
+                        <path d="m628.87324,526.81289,10.56338-11.26761" />
+                        <path d="m628.87324,556.39035,50-42.25352" />
+                        <path d="M629.57746,569.77063,694.3662,516.24951" />
+                        <path d="m630.28169,581.74246,73.94366-65.49295" />
+                        <path d="m630.28169,593.7143,85.21127-73.94367" />
+                        <path d="m639.43662,615.54528c20.1835-11.81612,48.62192-38.8358,83.80282-71.12676" />
+                        <path d="m630.98592,606.39035c27.59507-22.19601,55.21183-44.41371,90.14084-73.94366" />
+                        <path d="M716.90141,614.84106,726.76056,602.165" />
+                        <path d="m703.52113,615.54528c5.19837-10.27775,13.16307-17.39574,18.30986-23.94366" />
+                        <path d="m685.21127,615.54528,37.32394-40.14084" />
+                        <path d="m662.67606,616.24951c7.80258-4.23939,67.60816-57.21895,58.4507-54.92958" />
+                    </g>
+                    <g id="block11fill">
+                        <path d="m739.43662,497.23542,8.4507-5.6338" />
+                        <path d="m737.68106,510.2686,22.53521-19.71831" />
+                        <path d="m737.32394,523.99599c8.70857-3.16727,19.01439-14.32077,29.57747-26.76057" />
+                        <path d="m735.91549,540.19317c11.34056-9.83844,23.0945-19.541,31.69014-30.28169" />
+                        <path
+                            d="m738.02817,553.57345,26.76056-23.94366c-4.09558-1.02742,0.14165-0.70423,2.11268-0.70423" />
+                        <path d="m735.21127,570.47486,30.98591-26.05634" />
+                        <path d="m736.61972,581.74246,29.57746-24.64788" />
+                        <path d="m738.02817,595.82697,25.35211-23.23944" />
+                        <path d="m738.4016,608.09952,26.76056-23.94366" />
+                        <path d="M746.47887,614.84106,765.49296,596.5312" />
+                        <path d="m757.04225,616.24951,8.45071-7.74648" />
+                    </g>
+                    <g id="block12fill">
+                        <path d="m777.46479,457.7988,9.15493-6.33803" />
+                        <path d="M778.82171,465.92316,794.3662,451.46077" />
+                        <path d="m778.87324,476.81289,20.42253-18.30986" />
+                        <path d="m778.16901,491.60162,22.53522-21.83099" />
+                        <path d="M778.87324,503.57345,800,482.44669" />
+                        <path d="m778.87324,514.13683,21.83099-18.30986" />
+                        <path d="m780.98592,527.51711c9.49807-8.10645,14.80425-13.67879,19.71831-19.01408" />
+                        <path d="m778.16901,544.41852c7.84393-7.00241,14.43236-11.49383,23.94366-21.83099" />
+                        <path d="m783.80282,554.9819c4.56218-5.90257,7.71537-11.33549,17.60563-19.01409" />
+                        <path d="m780.28169,571.88331,20.42253-17.60564" />
+                        <path d="M781.69014,586.67204,800,569.06641" />
+                        <path d="m779.57746,598.64387,19.01409-14.78873" />
+                        <path d="M779.57746,609.91148,798.59155,593.7143" />
+                        <path d="m790.84507,612.02415,9.85916-8.4507" />
+                    </g>
+                </g>
+                <g id="widthConnectors" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="blockWidthConnector1"
+                        d="m 462.81168,392.93247 c 7.12103,17.659 13.63437,23.06742 62.68143,19.19076" />
+                    <g id="blockWidthConnector2">
+                        <path d="M 766.82573,412.92316 C 783.90869,412.2983 792.00582,428.48206 793,440.36218" />
+                        <path d="m777.23577,131.08635h25.20325" transform="translate(0,308.2677)" />
+                    </g>
+                </g>
+                <g id="heightConnectors" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="blockHeightConnector1"
+                        d="m603.47826,381.40566c112.11951-0.0181,304.35789-16.75581,318.73454,46.95652" />
+                    <g id="blockHeightConnector2">
+                        <path d="m935.34783,488.36218c9.34853,31.41969 -26.76618,47.56921 -117.34783,49" />
+                        <path d="m812.19512,138.40343c4.38201,58.04055,7.74095,115.05801,5.69106,166.66666"
+                            transform="translate(0,308.2677)" />
+                    </g>
+                </g>
+                <g id="bcConnectors1" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="benefitOptionConnector1"
+                        d="m92.141894,617.95195c12.879906-21.34762,34.162656-11.85912,83.511086-15.60784,50.3225-5.1289,113.0249,8.63424,110.76433-17.0839,41.63963,23.16201,106.28523,22.78211,118.92992,17.80463,92.04057-6.31227,101.76198-8.89606,113.59364,6.93082"
+                        stroke-dasharray="none" fill="none" />
+                    <path id="costlyOptionConnector1"
+                        d="m530.9037,628.44793c23.02432,25.68689,21.9189,5.76386,120.0193,16.69225,14.61691,12.65139,10.03667,20.22006,16.7342,22.31227,3.63143-14.41652,9.64693-16.91266,15.88141-18.31394,95.61594-2.20823,112.78708-6.67436,119.85155-20.81641" />
+                </g>
+                <g id="bcConnectors2" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="benefitOptionConnector2"
+                        d="m287.82609,550.97088c5.39153-5.64244,4.11076-26.55246-6.08696-47.82609" />
+                    <path id="costlyOptionConnector2"
+                        d="m666.08696,687.49261c-0.15472,22.37642-18.6333,31.64637-56.46051,40.29395" />
+                </g>
+                <g id="abatementGroup" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="abatementConnector"
+                        d="m890.91145,639.4306c1.56549,20.52491,8.1851,30.95367,24.14539,39.07538" />
+                </g>
+                <g id="prioritisationGroup" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path id="prioritisationHeaderBox"
+                        d="m613.94,858.30448c-106.0817,6.91513-194.57815,0.67251-260.22607,1.41421,0.99295,14.2569,0.35749,18.47558,0,27.57716,105.59097-2.25344,189.18031-1.48349,267.57709,0v-28.99138h-9.55634" />
+                    <path id="lowCostCircle"
+                        d="m116.52174,855.3187c-28.296393,3.86793-42.12072,17.87563-24.347827,29.56523,15.085337,8.6076,35.578047,11.07512,43.478257,3.47825,27.50908-29.64132-4.19245-33.81742-16.52174-33.91304" />
+                    <path id="lowestCostConnector" d="m118,855.36218c6.05519-14.92641,13.58333-27.8889,12-53" />
+                    <g id="prioritisationArrow1">
+                        <path d="m151.10799,873.36347c29.56796,1.8747,145.27908-6.44952,193.36036-1.02051" />
+                        <path
+                            d="m330.64883,860.58604c9.67913,4.25626,9.19479,5.49939,13.99877,12.23516l-13.72248,8.20937" />
+                    </g>
+                    <g id="prioritisationArrow2">
+                        <path d="m621.82773,872.13383c33.52529-3.6049,185.9721-1.0523,218.09172,2.7519" />
+                        <path
+                            d="m826.59281,865.81815c9.67913,4.25626,11.64552,4.75079,14.05001,9.08707l-13.98293,7.47927" />
+                    </g>
+                    <path id="highestCostCircle"
+                        d="m876.20868,858.7477c-28.29639,3.86793-43.85985,22.22346-29.56521,29.56523,15.08533,8.6076,28.70975,6.67605,44.34782-0.86958,22.01274-16.80704,11.45972-27.73046-14.78261-27.82608" />
+                    <g id="highestCostConnector">
+                        <path d="M875.4176,857.2924c-73.39212-90.42984-72.48983-131.71224-81.90178-214.74632" />
+                        <path d="m792.30691,326.08229c-0.6179-2.93993-1.93441-6.69667-1.25-11.13008"
+                            transform="translate(0,308.2677)" />
+                    </g>
+                </g>
+                <g id="qConnectors" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <g id="qConnector01">
+                        <path d="M45.679012,593.4772c-43.876315,47.61038,40.244734,83.78649,141.97532,62.96297"
+                            transform="translate(0,308.2677)" />
+                        <path d="m76.502429,964.9895c-20.485123,33.05539,37.838611,32.79222,79.063861,40.2766" />
+                    </g>
+                    <path id="qConnector2" d="m309.85508,1006.8227c13.1076-3.3018,35.45796-5.3758,63.25745-2.4691" />
+                    <path id="qConnector3" d="m523.60011,1007.6832c13.47498-3.2454,30.42284-1.3743,46.91357-1.3419" />
+                    <path id="qConnector4" d="m723.61381,1007.9177c-0.81104-3.2504,54.77171-4.3892,64.04051-4.9382" />
+                </g>
+                <g id="manGroup" stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path
+                        d="m971.98868,952.76309c-29.48664-1.0938-26.29209,17.6296-16.8268,25.51849,9.98885,9.24905,17.51036,7.67356,27.86521-0.43439,7.93797-12.94166,1.33813-23.29698-16.53841-24.64973" />
+                    <path
+                        d="m964.37037,680.39695c25.90089-8.16056,24.14561-9.82525,37.99083-19.53396-6.2057-6.08453-7.17049-8.91519-13.98774-15.48764"
+                        transform="translate(0,308.2677)" />
+                    <path
+                        d="m954.77469,950.14305c-25.20491,6.3002-17.46054,4.92509-19.53704,6.58025,5.57078,14.67643,27.18317,30.79042,29.41358,32.17592" />
+                    <path d="m963.4321,693.71177c6.67482,13.38968,6.86237,20.0082,9.39197,28.66049"
+                        transform="translate(0,308.2677)" />
+                    <path
+                        d="m956.74103,953.38888c-3.11084-0.69217-3.82182-1.47692-2.25037-2.79073,0.54962-0.46932,0.49093-3.64154,6.75037,1.38512" />
+                    <path
+                        d="m984.37083,948.46193c3.45296,0.66423,5.35211,3.81639,3.60784,5.07717-1.84084,1.47817-3.5034,1.14647-5.41169-0.14933" />
+                    <path
+                        d="m964.75,680.09448c0.75,5.25-1.75,16.5-1.75,16.5-10.32404,11.19906-15.0922,19.96742-14.75,26.5"
+                        transform="translate(0,308.2677)" />
+                    <path
+                        d="m944.98953,1032.822c-3.35269-0.5353-5.72438-1.4924-4.03077-2.5084,1.78738-1.1911,3.92935-2.5069,5.78224-1.4627,2.60813,2.3259,1.35782,3.8375-1.75147,3.8508" />
+                    <path
+                        d="m975.01047,1034.0501c3.35269-0.5353,7.04365-1.2285,5.35004-2.2445-1.78738-1.1911-5.24862-2.7708-7.10151-1.7266-2.60813,2.3259-1.35782,3.8375,1.75147,3.8508" />
+                    <path d="m960.28802,968.27417c-0.55032-2.70023-1.80209-5.28355,3.81834-9.01223" />
+                    <path d="m971.61707,959.66805c-2.4142,2.76844-5.59244,5.30767-2.88625,9.61223" />
+                    <path d="m962,668.29448c1.04891-0.80296,0.62121-1.85202,5.6-2" transform="translate(0,308.2677)" />
+                </g>
+            </g>
+        </svg>
+        <div id="play01">
+            <svg id="button01">
+                <g stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path
+                        d="m11.060262,11.806307c3.47815,39.188559,5.91396,73.686609,5.34351,94.656483,20.45053-13.394944,43.7529-29.166434,76.33588-52.671754-23.00177-13.46682-43.11413-26.57247-81.67939-41.984729z" />
+                    <path d="m9.6175282,9.8850436-3.26753,24.50203,4.2011198,83.888286,6.06828-12.87395" />
+                    <path d="M10.922867,118.66116,89.393384,65.682655,92.706348,53.075064" />
+                </g>
+            </svg>
+        </div>
+        <div id="play02" class="play">
+            <svg id="button02">
+                <g stroke-dasharray="none" fill="none">
+                    <path class="dummy" d="m0,0 c0,0 0,-0 -0,-0" />
+                    <path
+                        d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z" />
+                    <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107" />
+                    <path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364" />
+                </g>
+            </svg>
+        </div>
+        <div id="play03" class="play">
+            <svg id="button03">
+                <g stroke-dasharray="none" fill="none">
+                    <path
+                        d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z" />
+                    <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107" />
+                    <path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364" />
+                </g>
+            </svg>
+        </div>
+        <div id="play04" class="play">
+            <svg id="button04">
+                <g stroke-dasharray="none" fill="none">
+                    <path
+                        d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z" />
+                    <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107" />
+                    <path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364" />
+                </g>
+            </svg>
+        </div>
+        <div id="play05" class="play">
+            <svg id="button05">
+                <g stroke-dasharray="none" fill="none">
+                    <path
+                        d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z" />
+                    <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107" />
+                    <path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364" />
+                </g>
+            </svg>
+        </div>
+        <div id="play06" class="play">
+            <svg id="button06">
+                <g stroke-dasharray="none" fill="none">
+                    <path
+                        d="M9.0474165,10.648024c2.3181165,24.575813,3.9415335,46.210127,3.5613405,59.360692,13.629862-8.400197,29.160416-18.290767,50.876308-33.031353-15.330211-8.445273-28.734689-16.664049-54.437648-26.329339z" />
+                    <path d="M8.0858639,9.4431671,5.9081217,24.808808,9.6870867,77.742915,12.752467,69.343107" />
+                    <path d="M8.9558456,78.311192,61.254846,44.434799,63.462869,36.528364" />
+                </g>
+            </svg>
+        </div>
+        <div id="play07" class="play">?!?!!</div>
+    </div>
+
+    <script>
+        //animation for sketchy MACC infographic
+        var color = "";
+        function rand(min, max) { return min + Math.random() * (max - min); }
+        function getRandomColor() {
+            var h = rand(1, 360);
+            var s = rand(90, 100);
+            var l = rand(40, 80);
+            return color = 'hsla(' + h + ',' + s + '%,' + l + '%,' + 0.70 + ')';
+        }
+        getRandomColor()
+        var group = 0;	//group svg elements for drawing phases	
+        // element											time	delay	color
+        var svgGroups = [[document.getElementById("frame"), 0.75, 0.05, "#000"], 		// 0
+        [document.getElementById("axis"), 0.5, 0.2, "#000"], 		// 1
+        [document.getElementById("blocks"), 0.25, 0.05, color], 		// 2
+        [document.getElementById("blockFills"), 0.25, 0.23, color],			// 3
+        [document.getElementById("widthConnectors"), 0.5, 0.0, "#000"],		// 4 
+        [document.getElementById("heightConnectors"), 0.75, 0.0, "#000"],		// 5
+        [document.getElementById("bcConnectors1"), 1.0, 0.0, "#000"],		// 6 
+        [document.getElementById("bcConnectors2"), 0.5, 0.0, "#000"],		// 7
+        [document.getElementById("abatementGroup"), 0.6, 0.0, "#000"],		// 8 
+        [document.getElementById("prioritisationGroup"), 0.5, 0.0, "#000"],		// 9 
+        [document.getElementById("qConnectors"), 0.5, 0.0, "#000"],		// 10 
+        [document.getElementById("manGroup"), 0.2, 0.1, "#000"],		// 11
+        [document.getElementById("button01"), 0.5, 0.0, "#000"],		// 12	 
+        [document.getElementById("button02"), 0.2, 0.5, "#000"],		// 13	 
+        [document.getElementById("button03"), 0.0, 0.0, "#000"],		// 14	 
+        [document.getElementById("button04"), 0.0, 0.0, "#000"],		// 15	 
+        [document.getElementById("button05"), 0.0, 0.0, "#000"],		// 16	 
+        [document.getElementById("button06"), 0.0, 0.0, "#000"],		// 17	
+        ];
+        var NS = "http://www.w3.org/2000/svg";
+        var Animation = new TimelineMax();
+        Animation.pause();
+        animate(12);	// draw start button
+
+        function animate(group) {
+            var svgPaths = svgGroups[group][0].getElementsByTagNameNS(NS, "path");
+            Animation.play()
+            for (var i = 0; i < svgPaths.length; i++) {
+                var line = svgPaths[i];
+                var time = svgGroups[group][1];
+                var dims = line.getTotalLength();
+                var linearea = dims
+                var strokeWidth = (line.getAttribute("stroke-width") == null) ? 3 : line.getAttribute("stroke-width");
+                line.style.strokeDasharray = (linearea) + " " + (linearea);
+                line.style.strokeDashoffset = ((/Firefox/i.test(navigator.userAgent)) ? linearea / strokeWidth : linearea);
+                line.style.stroke = svgGroups[group][3];
+                line.style.strokeWidth = 2.5;
+                line.style.strokeLinecap = "round";
+
+                Animation.add(TweenMax.to(line.style, time, {
+                    strokeDashoffset: 0, ease: Sine.easeInOut, onUpdate: function () {
+                        var n = document.createTextNode(' ');
+                        document.body.appendChild(n);
+                        document.body.removeChild(n);
+                    }
+                }), (i > 0) ? '-= ' + svgGroups[group][2] + '' : "");
+            }
+        }
+
+        //animation and narrative controls
+        $(document).ready(function () {
+            //hide non-needed call buttons and text 
+            $("#play01").show(); $("#play02").hide(); $("#play03").hide(); $("#play04").hide(); $("#play05").hide(); $("#play06").hide(); $("#play07").hide();
+            $(".narrative01").show(); $(".narrative02").hide(); $(".narrative03").hide(); $(".narrative04").hide(); $(".narrative05").hide(); $(".narrative06").hide(); $(".narrative07").hide(); $(".narrative08").hide(); $(".narrative09").hide();
+
+            // funcion and button behaviour for playing animation
+            $("#play01").click(function () {
+                //call functions to animate and show text
+                $(".narrative02").delay(500).fadeIn();
+                $(".narrative03").delay(6000).fadeIn(2000);
+                animate(0); animate(1); animate(2); animate(3); animate(13);
+                //reset for new button	
+                $("#play01").fadeOut(100); $("#play02").show(); $("#play03").hide(); $("#play04").hide(); $("#play05").hide(); $("#play06").hide(); $("#play07").hide();
+            })
+            $("#play02").click(function () {
+                //call functions to animate and show text
+                $("#blockWidthText").delay(500).fadeIn();
+                $("#blockHeightText").delay(2000).fadeIn();
+                animate(14); animate(4); animate(5);
+                //reset for new button	
+                $("#play01").hide(); $("#play02").hide(); $("#play03").show(); $("#play04").hide(); $("#play05").hide(); $("#play06").hide(); $("#play07").hide();
+            })
+            $("#play03").click(function () {
+                //call functions to animate and show text
+                $("#benefitOptionLabel").delay(500).fadeIn();
+                $("#costlyOptionLabel").delay(1500).fadeIn();
+                $("#benefitOptionText").delay(2000).fadeIn();
+                $("#costlyOptionText").delay(2750).fadeIn();
+                animate(15); animate(6); animate(7);
+
+                //reset for new button	
+                $("#play01").hide(); $("#play02").hide(); $("#play03").hide(); $("#play04").show(); $("#play05").hide(); $("#play06").hide(); $("#play07").hide();
+            })
+            $("#play04").click(function () {
+                //call functions to animate and show text
+                $("#abatementText").delay(500).fadeIn();
+                animate(16); animate(8);
+                //reset for new button	
+                $("#play01").hide(); $("#play02").hide(); $("#play03").hide(); $("#play04").hide(); $("#play05").show(); $("#play06").hide(); $("#play07").hide();
+            })
+            $("#play05").click(function () {
+                //call functions to animate and show text
+                $("#prioritisationLabel").fadeIn();
+                $("#lowestCostLabel").delay(500).fadeIn();
+                $("#highestCostLabel").delay(2500).fadeIn();
+                $("#prioritisationText").delay(4250).fadeIn();
+                animate(17); animate(9);
+                //reset for new button	
+                $("#play01").hide(); $("#play02").hide(); $("#play03").hide(); $("#play04").hide(); $("#play05").hide(); $("#play06").show(); $("#play07").hide();
+            })
+            $("#play06").click(function () {
+                //call functions to animate and show text
+                $("#question01").delay(500).fadeIn();
+                $("#question02").delay(1000).fadeIn();
+                $("#question03").delay(1500).fadeIn();
+                $("#question04").delay(2000).fadeIn();
+                animate(10); animate(11);
+                //reset for new button	
+                $("#play01").hide(); $("#play02").hide(); $("#play03").hide(); $("#play04").hide(); $("#play05"); $("#play06").hide(); $("#play07").fadeIn(10000);
+            })
+        })
+
+    </script>
 
 </body>
+
 </html>
